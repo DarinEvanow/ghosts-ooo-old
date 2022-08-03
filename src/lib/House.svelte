@@ -45,6 +45,13 @@
 	// Bushes
 	const bushGeometry = new SphereBufferGeometry(1, 16, 16);
 	const bushMaterial = new MeshStandardMaterial({ color: '#89c854' });
+
+	const bushProperties = [
+		{ position: { x: 0.8, y: 0.2, z: 2.2 }, scale: 0.5 },
+		{ position: { x: 1.4, y: 0.1, z: 2.1 }, scale: 0.25 },
+		{ position: { x: -0.8, y: 0.1, z: 2.2 }, scale: 0.4 },
+		{ position: { x: -1, y: 0.05, z: 2.6 }, scale: 0.15 }
+	];
 </script>
 
 <Group>
@@ -67,28 +74,12 @@
 			z: wallsDimensions.width / 2 + 0.01
 		}}
 	/>
-	<Mesh
-		geometry={bushGeometry}
-		material={bushMaterial}
-		position={{ x: 0.8, y: 0.2, z: 2.2 }}
-		scale={0.5}
-	/>
-	<Mesh
-		geometry={bushGeometry}
-		material={bushMaterial}
-		position={{ x: 1.4, y: 0.1, z: 2.1 }}
-		scale={0.25}
-	/>
-	<Mesh
-		geometry={bushGeometry}
-		material={bushMaterial}
-		position={{ x: -0.8, y: 0.1, z: 2.2 }}
-		scale={0.4}
-	/>
-	<Mesh
-		geometry={bushGeometry}
-		material={bushMaterial}
-		position={{ x: -1, y: 0.05, z: 2.6 }}
-		scale={0.15}
-	/>
+	{#each bushProperties as bush}
+		<Mesh
+			geometry={bushGeometry}
+			material={bushMaterial}
+			position={bush.position}
+			scale={bush.scale}
+		/>
+	{/each}
 </Group>
