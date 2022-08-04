@@ -51,7 +51,25 @@
 		roofDimensions.height,
 		roofDimensions.segments
 	);
-	const roofMaterial = new MeshStandardMaterial({ color: '#b35f45' });
+	roofGeometry.setAttribute('uv2', new Float32BufferAttribute(roofGeometry.attributes.uv.array, 2));
+
+	const roofTextures = useTexture({
+		color: '/textures/roof/color.jpg',
+		ambientOcclusion: '/textures/roof/ambientOcclusion.jpg',
+		normal: '/textures/roof/normal.jpg',
+		roughness: '/textures/roof/roughness.jpg',
+		displacement: '/textures/roof/roughness.jpg'
+	});
+
+	const roofMaterial = new MeshStandardMaterial({
+		color: '#b35f45',
+		map: roofTextures.color,
+		aoMap: roofTextures.ambientOcclusion,
+		normalMap: roofTextures.normal,
+		roughnessMap: roofTextures.roughness,
+		displacementMap: roofTextures.displacement,
+		displacementScale: 0.001
+	});
 
 	// Door
 	const doorDimensions = {
