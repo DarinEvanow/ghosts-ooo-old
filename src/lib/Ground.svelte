@@ -12,4 +12,5 @@
 	material={groundMaterial}
 	position={{ y: 0 }}
 	rotation={{ x: -Math.PI * 0.5 }}
+	receiveShadow
 />
