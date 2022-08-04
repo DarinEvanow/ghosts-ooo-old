@@ -20,7 +20,25 @@
 		wallsDimensions.height,
 		wallsDimensions.depth
 	);
-	const wallsMaterial = new MeshStandardMaterial({ color: '#ac8e82' });
+	wallsGeometry.setAttribute(
+		'uv2',
+		new Float32BufferAttribute(wallsGeometry.attributes.uv.array, 2)
+	);
+
+	const wallsTextures = useTexture({
+		color: '/textures/bricks/color.jpg',
+		ambientOcclusion: '/textures/bricks/ambientOcclusion.jpg',
+		normal: '/textures/bricks/normal.jpg',
+		roughness: '/textures/bricks/roughness.jpg'
+	});
+
+	const wallsMaterial = new MeshStandardMaterial({
+		color: '#ac8e82',
+		map: wallsTextures.color,
+		aoMap: wallsTextures.ambientOcclusion,
+		normalMap: wallsTextures.normal,
+		roughnessMap: wallsTextures.roughness
+	});
 
 	// Roof
 	const roofDimensions = {
