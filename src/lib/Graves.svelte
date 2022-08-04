@@ -36,6 +36,7 @@
 			material={graveMaterial}
 			position={graveProperty.position}
 			rotation={graveProperty.rotation}
+			castShadow
 		/>
 	{/each}
 </Group>

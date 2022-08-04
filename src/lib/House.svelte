@@ -6,7 +6,7 @@
 		PlaneBufferGeometry,
 		SphereBufferGeometry
 	} from 'three';
-	import { Group, Mesh } from '@threlte/core';
+	import { Group, Mesh, PointLight } from '@threlte/core';
 
 	// Walls
 	const wallsDimensions = {
@@ -59,6 +59,7 @@
 		geometry={wallsGeometry}
 		material={wallsMaterial}
 		position={{ y: wallsDimensions.height / 2 }}
+		castShadow
 	/>
 	<Mesh
 		geometry={roofGeometry}
@@ -74,12 +75,20 @@
 			z: wallsDimensions.width / 2 + 0.01
 		}}
 	/>
+	<PointLight
+		color={'#ff7d46'}
+		intensity={1}
+		distance={7}
+		position={{ x: 0, y: 2.2, z: 2.7 }}
+		shadow={{ mapSize: [256, 256], camera: { far: 7 } }}
+	/>
 	{#each bushProperties as bush}
 		<Mesh
 			geometry={bushGeometry}
 			material={bushMaterial}
 			position={bush.position}
 			scale={bush.scale}
+			castShadow
 		/>
 	{/each}
 </Group>
