@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Group, Mesh } from '@threlte/core';
-	import { BoxBufferGeometry, MeshStandardMaterial } from 'three';
+	import { Group, Mesh, useTexture } from '@threlte/core';
+	import { BoxBufferGeometry, Float32BufferAttribute, MeshStandardMaterial } from 'three';
 
 	const graveDimensions = {
 		width: 0.6,
@@ -12,7 +12,29 @@
 		graveDimensions.height,
 		graveDimensions.depth
 	);
-	const graveMaterial = new MeshStandardMaterial({ color: '#b2b6b1' });
+
+	graveGeometry.setAttribute(
+		'uv2',
+		new Float32BufferAttribute(graveGeometry.attributes.uv.array, 2)
+	);
+
+	const graveTextures = useTexture({
+		color: '/textures/grave/color.jpg',
+		ambientOcclusion: '/textures/grave/ambientOcclusion.jpg',
+		normal: '/textures/grave/normal.jpg',
+		roughness: '/textures/grave/roughness.jpg',
+		displacement: '/textures/grave/roughness.jpg'
+	});
+
+	const graveMaterial = new MeshStandardMaterial({
+		color: '#b2b6b1',
+		map: graveTextures.color,
+		aoMap: graveTextures.ambientOcclusion,
+		normalMap: graveTextures.normal,
+		roughnessMap: graveTextures.roughness,
+		displacementMap: graveTextures.displacement,
+		displacementScale: 0.001
+	});
 
 	const graveProperties = Array(50)
 		.fill('')

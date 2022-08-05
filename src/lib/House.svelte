@@ -2,11 +2,12 @@
 	import {
 		BoxBufferGeometry,
 		ConeBufferGeometry,
+		Float32BufferAttribute,
 		MeshStandardMaterial,
 		PlaneBufferGeometry,
 		SphereBufferGeometry
 	} from 'three';
-	import { Group, Mesh, PointLight } from '@threlte/core';
+	import { Group, Mesh, PointLight, useTexture } from '@threlte/core';
 
 	// Walls
 	const wallsDimensions = {
@@ -19,7 +20,25 @@
 		wallsDimensions.height,
 		wallsDimensions.depth
 	);
-	const wallsMaterial = new MeshStandardMaterial({ color: '#ac8e82' });
+	wallsGeometry.setAttribute(
+		'uv2',
+		new Float32BufferAttribute(wallsGeometry.attributes.uv.array, 2)
+	);
+
+	const wallsTextures = useTexture({
+		color: '/textures/bricks/color.jpg',
+		ambientOcclusion: '/textures/bricks/ambientOcclusion.jpg',
+		normal: '/textures/bricks/normal.jpg',
+		roughness: '/textures/bricks/roughness.jpg'
+	});
+
+	const wallsMaterial = new MeshStandardMaterial({
+		color: '#ac8e82',
+		map: wallsTextures.color,
+		aoMap: wallsTextures.ambientOcclusion,
+		normalMap: wallsTextures.normal,
+		roughnessMap: wallsTextures.roughness
+	});
 
 	// Roof
 	const roofDimensions = {
@@ -32,15 +51,63 @@
 		roofDimensions.height,
 		roofDimensions.segments
 	);
-	const roofMaterial = new MeshStandardMaterial({ color: '#b35f45' });
+	roofGeometry.setAttribute('uv2', new Float32BufferAttribute(roofGeometry.attributes.uv.array, 2));
+
+	const roofTextures = useTexture({
+		color: '/textures/roof/color.jpg',
+		ambientOcclusion: '/textures/roof/ambientOcclusion.jpg',
+		normal: '/textures/roof/normal.jpg',
+		roughness: '/textures/roof/roughness.jpg',
+		displacement: '/textures/roof/roughness.jpg'
+	});
+
+	const roofMaterial = new MeshStandardMaterial({
+		color: '#b35f45',
+		map: roofTextures.color,
+		aoMap: roofTextures.ambientOcclusion,
+		normalMap: roofTextures.normal,
+		roughnessMap: roofTextures.roughness,
+		displacementMap: roofTextures.displacement,
+		displacementScale: 0.001
+	});
 
 	// Door
 	const doorDimensions = {
 		width: 2,
-		height: 2
+		height: 2,
+		widthSegments: 100,
+		heightSegments: 100
 	};
-	const doorGeometry = new PlaneBufferGeometry(doorDimensions.width, doorDimensions.height);
-	const doorMaterial = new MeshStandardMaterial({ color: '#aa7b7b' });
+	const doorGeometry = new PlaneBufferGeometry(
+		doorDimensions.width,
+		doorDimensions.height,
+		doorDimensions.widthSegments,
+		doorDimensions.heightSegments
+	);
+	doorGeometry.setAttribute('uv2', new Float32BufferAttribute(doorGeometry.attributes.uv.array, 2));
+
+	const doorTextures = useTexture({
+		color: '/textures/door/color.jpg',
+		alpha: '/textures/door/alpha.jpg',
+		ambientOcclusion: '/textures/door/ambientOcclusion.jpg',
+		height: '/textures/door/height.jpg',
+		normal: '/textures/door/normal.jpg',
+		metalness: '/textures/door/metalness.jpg',
+		roughness: '/textures/door/roughness.jpg'
+	});
+
+	const doorMaterial = new MeshStandardMaterial({
+		color: '#aa7b7b',
+		map: doorTextures.color,
+		transparent: true,
+		alphaMap: doorTextures.alpha,
+		aoMap: doorTextures.ambientOcclusion,
+		displacementMap: doorTextures.height,
+		displacementScale: 0.1,
+		normalMap: doorTextures.normal,
+		metalnessMap: doorTextures.metalness,
+		roughnessMap: doorTextures.roughness
+	});
 
 	// Bushes
 	const bushGeometry = new SphereBufferGeometry(1, 16, 16);
@@ -71,7 +138,7 @@
 		geometry={doorGeometry}
 		material={doorMaterial}
 		position={{
-			y: doorDimensions.height / 2,
+			y: doorDimensions.height / 2 - 0.2,
 			z: wallsDimensions.width / 2 + 0.01
 		}}
 	/>
