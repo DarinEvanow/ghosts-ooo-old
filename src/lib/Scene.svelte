@@ -6,7 +6,8 @@
 	import Ground from '$lib/Ground.svelte';
 	import House from '$lib/House.svelte';
 	import Graves from '$lib/Graves.svelte';
-	import Ambience from './Ambience.svelte';
+	import Ambience from '$lib/Ambience.svelte';
+	import Ghosts from '$lib/Ghosts.svelte';
 
 	let sizes: { width: number; height: number };
 	let camera: PerspectiveCamera;
@@ -42,4 +43,5 @@
 	<Ground />
 	<House />
 	<Graves />
+	<Ghosts />
 </Canvas>
