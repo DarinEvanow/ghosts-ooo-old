@@ -52,4 +52,5 @@
 
 	<Ground />
 	<Gates />
+	<Graves />
 </Canvas>
