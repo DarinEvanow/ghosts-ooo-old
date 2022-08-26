@@ -17,7 +17,6 @@ export function beginAnimation() {
 	});
 
 	setInterval(async () => {
-		console.log('testing');
 		await rotationValue.set(0.25);
 		await rotationValue.set(-0.25);
 		await rotationValue.set(0.25);
