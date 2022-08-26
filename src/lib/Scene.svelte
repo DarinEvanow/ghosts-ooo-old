@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { PerspectiveCamera } from 'three';
-	import {
-		AmbientLight,
-		CameraInstance,
-		Canvas,
-		DirectionalLight,
-		OrbitControls
-	} from '@threlte/core';
+	import { AmbientLight, CameraInstance, Canvas, OrbitControls } from '@threlte/core';
 
 	import Ground from '$lib/Ground.svelte';
 	import Graves from '$lib/Graves.svelte';
@@ -42,12 +36,6 @@
 	<CameraInstance useCamera {camera}>
 		<OrbitControls />
 	</CameraInstance>
-	<!-- <DirectionalLight
-		color={'#ffffff'}
-		intensity={2}
-		position={{ x: 0, y: 1, z: -2 }}
-		shadow={{ mapSize: [256, 256], camera: { far: 15 } }}
-	/> -->
 	<AmbientLight color={'#ffffff'} />
 
 	<Ground />
